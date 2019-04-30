@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['middleware' => ['auth.jwt:api']], function () {
             Route::post('/logout', 'AuthController@logout')->name('openlibrary.auth.logout');
             Route::post('/refresh', 'AuthController@refresh')->name('openlibrary.auth.refresh');
+            Route::get('/verify', 'AuthController@verify')->name('openlibrary.auth.verify');
         });
     });
 

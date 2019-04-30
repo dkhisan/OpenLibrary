@@ -76,4 +76,11 @@ class AuthController extends Controller
 
         return response()->json($refresh);
     }
+
+    public function verify()
+    {
+        $user = auth()->user();
+
+        return response()->json($user);
+    }
 }
