@@ -36,14 +36,6 @@ Route::group(['prefix' => 'v1'], function () {
             'destroy' => 'openlibrary.users.destroy'
         ]);
 
-        Route::apiResource('profiles', 'UserProfileController')->names([
-            'index' => 'openlibrary.profiles.index',
-            'store' => 'openlibrary.profiles.store',
-            'show' => 'openlibrary.profiles.show',
-            'update' => 'openlibrary.profiles.update',
-            'destroy' => 'openlibrary.profiles.destroy'
-        ]);
-
         Route::apiResource('books', 'BookController')->names([
             'index' => 'openlibrary.books.index',
             'store' => 'openlibrary.books.store',

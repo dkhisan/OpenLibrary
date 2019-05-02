@@ -14,7 +14,6 @@ $factory->define(UserProfile::class, function (Faker $faker) {
         'name' => $faker->name,
         'avatar' => 'default.png',
         'address' => $faker->address,
-        'phone' => $faker->phone,
-        'cpf' => '000.000.000-00'
+        'phone' => $faker->phone
     ];
 });

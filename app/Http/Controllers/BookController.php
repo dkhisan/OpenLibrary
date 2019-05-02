@@ -10,12 +10,20 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        // TODO: filtros de busca?
-        $books = Book::orderBy('title')->paginate(15);
+        $books = null;
+
+        if ($request->title) {
+            $books = Book::where('title', 'like', "%{$request->title}%")
+            ->orderBy('title')
+            ->paginate(10);
+        } else {
+            $books = Book::orderBy('title')->paginate(10);
+        }
 
         return response()->json($books);
     }

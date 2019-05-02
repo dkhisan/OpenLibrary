@@ -18,7 +18,12 @@ use OpenLibrary\Models\User;
 $factory->define(User::class, function () {
     return [
         'email' => 'admin@mail.com',
+        'cpf' => '000.000.000-00',
         'password' => Hash::make('qwe123'),
-        'role' => 'administrador'
+        'role' => 'administrador',
+        'name' => 'Administrador',
+        'avatar' => 'default.png',
+        'address' => '',
+        'phone' => ''
     ];
 });

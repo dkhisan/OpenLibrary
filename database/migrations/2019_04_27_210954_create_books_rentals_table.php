@@ -15,7 +15,7 @@ class CreateBooksRentalsTable extends Migration
     {
         Schema::create('books_rentals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('profile_id')
+            $table->integer('user_id')
                 ->unsigned();
             $table->integer('book_id')
                 ->unsigned();
@@ -27,9 +27,9 @@ class CreateBooksRentalsTable extends Migration
             $table->dateTime('rent_at')
                 ->nullable();
 
-            $table->foreign('profile_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('profiles')
+                ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreign('book_id')

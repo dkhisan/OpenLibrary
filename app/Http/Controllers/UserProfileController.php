@@ -36,11 +36,10 @@ class UserProfileController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'address' => 'max:255',
-            'phone' => 'max:255',
-            'cpf' => 'max:255'
+            'phone' => 'max:255'
         ]);
 
-        $data = $request->only(['user_id', 'name', 'avatar', 'address', 'phone', 'cpf']);
+        $data = $request->only(['user_id', 'name', 'avatar', 'address', 'phone']);
         if (!$data['user_id']) $data['user_id'] = auth()->user()->id;
 
         $profile = UserProfile::create($data);
@@ -84,13 +83,11 @@ class UserProfileController extends Controller
         $avatar = $request->input('avatar');
         $address = $request->input('address');
         $phone = $request->input('phone');
-        $cpf = $request->input('cpf');
 
         $profile->name = $name;
         $profile->avatar = $avatar;
         $profile->address = $address;
         $profile->phone = $phone;
-        $profile->cpf = $cpf;
 
         $profile->save();
 

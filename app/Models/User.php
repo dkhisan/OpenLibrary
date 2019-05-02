@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'role'
+        'email', 'cpf', 'password', 'role', 'name', 'avatar', 'address', 'phone'
     ];
 
     /**
@@ -48,9 +48,4 @@ class User extends Authenticatable implements JWTSubject
    {
        return [];
    }
-
-    public function profile()
-    {
-        return $this->hasOne(UserProfile::class);
-    }
 }

@@ -17,9 +17,19 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('email')
                 ->unique();
+                $table->string('cpf')
+                ->unique()
+                ->nullable();
             $table->string('password');
             $table->enum('role', ['leitor', 'atendente', 'administrador'])
                 ->default('leitor');
+            $table->string('name');
+            $table->string('avatar')
+                ->nullable();
+            $table->string('address')
+                ->nullable();
+            $table->string('phone')
+                ->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
