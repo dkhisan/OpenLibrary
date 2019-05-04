@@ -48,4 +48,16 @@ class User extends Authenticatable implements JWTSubject
    {
        return [];
    }
+
+    public function books()
+    {
+        return $this->hasManyThrough(
+            Book::class,
+            BookRental::class,
+            'user_id',
+            'id',
+            'id',
+            'book_id'
+        );
+    }
 }

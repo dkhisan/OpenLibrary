@@ -9,21 +9,26 @@ class BookRental extends Model
     protected $table = 'books_rentals';
 
     protected $fillable = [
-        'profile_id', 'book_id', 'time', 'state', 'rent_at'
+        'user_id', 'book_id', 'time', 'state', 'rent_at'
     ];
 
     protected $hidden = [
-        'profile_id', 'book_id'
+        'user_id', 'book_id'
     ];
 
-    public function profile()
+    public function user()
     {
-        return $this->belongsTo(UserProfile::class);
+        return $this->belongsTo(User::class);
     }
 
     public function book()
     {
         return $this->belongsTo(Book::class);
+    }
+
+    public function scopeIsAvailable($builder)
+    {
+        return $builder->where('state', '<>', 'alugado');
     }
 
     public function scopeIsReserved($builder)

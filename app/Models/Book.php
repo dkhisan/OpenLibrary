@@ -10,26 +10,38 @@ class Book extends Model
         'title', 'description', 'year', 'author', 'publisher', 'cover'
     ];
 
-    public function rent()
-    {
-        return $this->belongsToMany(UserProfile::class, 'books_rentals', 'book_id', 'profile_id')
-            ->using(BookRental::class)
-            ->withPivot('id', 'time', 'state', 'rent_at');
-    }
-
     public function scopeIsAvailable($builder)
     {
-        return $builder->where(function($query) {
-            whereNotExists(function ($query) {
+        return $builder->where(function ($query) {
+            $query->whereNotExists(function ($query) {
                 $query->select()
                     ->from('books_rentals')
-                    ->whereRaw('books_rentals.book_id = books.id');
+                    ->whereRaw('book_id = books.id');
             })
-            ->orWhere(function ($query) {
+            ->orWhereExists(function ($query) {
                 $query->select()
                     ->from('books_rentals')
-                    ->where('state', '<>', 'alugado');
+                    ->where([
+                        ['state', '<>', 'alugado'],
+                        ['state', '<>', 'reservado']
+                    ]);
             });
         });
+    }
+
+    public function scopeIsReserved($builder)
+    {
+        return $builder->where('state', 'reservado');
+    }
+
+    public function scopeIsRented($builder)
+    {
+        return $builder->where('state', 'alugado');
+    }
+
+    public function scopeWithState($builder)
+    {
+        return $builder
+            ->rightJoin('books_rentals', 'book_id', 'books.id');
     }
 }

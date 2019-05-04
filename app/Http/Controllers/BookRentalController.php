@@ -36,17 +36,16 @@ class BookRentalController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', BookRental::class);
+        // $this->authorize('create', BookRental::class);
         $this->validate($request, [
-            'profile_id' => 'required',
+            'user_id' => 'required',
             'book_id' => 'required',
             'state' => 'required'
         ]);
 
-        $data = $request->only(['profile_id', 'book_id', 'time', 'state', 'rent_at']);
+        $data = $request->only(['user_id', 'book_id', 'time', 'state', 'rent_at']);
 
         $rent = BookRental::create($data);
-        $rent->profile;
         $rent->book;
 
         return response()->json($rent, 201);

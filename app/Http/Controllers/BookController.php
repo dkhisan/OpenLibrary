@@ -15,15 +15,30 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $books = null;
+        $user = auth()->user();
+        $per_page = 10;
+        $books = new Book();
+
+        if ($request->is_available === 'true') {
+            $books = $books->isAvailable();
+        }
+        else if ($request->my_reserves === 'true') {
+            $books = $user->books()->isReserved();
+
+        }
+        else if ($request->my_rents === 'true') {
+            $books = $user->books()->isRented();
+        }
 
         if ($request->title) {
-            $books = Book::where('title', 'like', "%{$request->title}%")
-            ->orderBy('title')
-            ->paginate(10);
-        } else {
-            $books = Book::orderBy('title')->paginate(10);
+            $books = $books->where('title', 'like', "%{$request->title}%")->withState();
         }
+
+        if ($request->per_page) {
+            $per_page = (int) $request->per_page;
+        }
+
+        $books = $books->orderBy('title')->paginate($per_page);
 
         return response()->json($books);
     }
