@@ -19,6 +19,14 @@ class BookController extends Controller
         $per_page = 10;
         $books = new Book();
 
+        if ($request->title) {
+            $books = $books->where('title', 'like', "%{$request->title}%");
+        }
+
+        if ($request->per_page) {
+            $per_page = (int) $request->per_page;
+        }
+
         if ($request->is_available === 'true') {
             $books = $books->isAvailable();
         }
@@ -29,13 +37,8 @@ class BookController extends Controller
         else if ($request->my_rents === 'true') {
             $books = $user->books()->isRented();
         }
-
-        if ($request->title) {
-            $books = $books->where('title', 'like', "%{$request->title}%")->withState();
-        }
-
-        if ($request->per_page) {
-            $per_page = (int) $request->per_page;
+        else {
+            $books = $books->selectRaw('books.*, ifnull(state, "disponível") state')->withState();
         }
 
         $books = $books->orderBy('title')->paginate($per_page);

@@ -23,7 +23,10 @@ class UserController extends Controller
         $users = new User();
 
         if ($request->name) {
-            $users = User::where('name', 'like', "%{$request->name}%");
+            $users = $users->where('name', 'like', "%{$request->name}%");
+        }
+        if ($request->reader === 'true') {
+            $users = $users->isReader();
         }
 
         $users = $users->paginate(10);

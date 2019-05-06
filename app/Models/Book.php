@@ -36,12 +36,12 @@ class Book extends Model
 
     public function scopeIsRented($builder)
     {
-        return $builder->where('state', 'alugado');
+        return $builder->select('time')->where('state', 'alugado');
     }
 
     public function scopeWithState($builder)
     {
         return $builder
-            ->rightJoin('books_rentals', 'book_id', 'books.id');
+            ->leftJoin('books_rentals', 'book_id', 'books.id');
     }
 }

@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function index(User $user)
     {
-        return $user->role === 'administrador';
+        return $user->role !== 'leitor';
     }
 
     /**

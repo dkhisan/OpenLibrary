@@ -19,8 +19,6 @@ class CreateBooksRentalsTable extends Migration
                 ->unsigned();
             $table->integer('book_id')
                 ->unsigned();
-            $table->tinyInteger('time')
-                ->nullable();
             $table->enum('state', ['reservado', 'alugado', 'devolvido', 'cancelado'])
                 ->default('reservado');
             $table->timestamps();
@@ -37,6 +35,8 @@ class CreateBooksRentalsTable extends Migration
                 ->on('books')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->dateTime('time')
+                ->nullable();
         });
     }
 

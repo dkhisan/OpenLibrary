@@ -60,4 +60,9 @@ class User extends Authenticatable implements JWTSubject
             'book_id'
         );
     }
+
+    public function scopeIsReader($builder)
+    {
+        return $builder->where('role', 'leitor');
+    }
 }
